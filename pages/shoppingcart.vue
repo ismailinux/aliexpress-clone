@@ -1,7 +1,7 @@
 <template>
     <MainLayout>
         <div id="ShoppingCartPage" class="mt-4 max-w-[1200px] mx-auto px-2">
-            <div v-if="false" class="h-[500px] flex items-center justify-center">
+            <div v-if="!userStore.cart.length" class="h-[500px] flex items-center justify-center">
                 <div class="pt-20">
                     <img
                         class="mx-auto"
@@ -11,9 +11,9 @@
 
                     <div class="text-xl text-center mt-4">No items yet?</div>
 
-                    <div v-if="true" class="flex text-center">
+                    <div v-if="!user" class="flex text-center">
                         <NuxtLink
-                            to="/auth"
+                            to="/login"
                             class="
                                 bg-[#FD374F]
                                 w-full
@@ -35,7 +35,7 @@
                 <div class="md:w-[65%]">
                     <div class="bg-white rounded-lg p-4">
                         <div class="text-2xl font-bold mb-2">
-                            Shopping Cart (0)
+                            Shopping Cart ({{ userStore.cart.length }})
                         </div>
                     </div>
 
@@ -44,7 +44,7 @@
                     </div>
 
                     <div id="Items" class="bg-white rounded-lg p-4 mt-4">
-                        <div v-for="product in products">
+                        <div v-for="product in userStore.cart">
                             <CartItem
                                 :product="product"
                                 :selectedArray="selectedArray"
@@ -103,7 +103,9 @@
 <script setup>
 import MainLayout from '~/layouts/MainLayout.vue';
 import { useUserStore } from '~/stores/user';
-const userStore = useUserStore()
+const userStore = useUserStore();
+const user = useSupabaseUser();
+
 
 let selectedArray = ref([])
 
@@ -155,10 +157,5 @@ const goToCheckout = () => {
 
     return navigateTo('/checkout')
 }
-
-const products = [
-  { id: 1, title: "Title 1", description: "This is a description", url: "https://picsum.photos/id/7/800/800", price: 9897 },
-  { id: 2, title: "Title 2", description: "This is a description", url: "https://picsum.photos/id/71/800/800", price: 9699 },
-];
 
 </script>

@@ -1,5 +1,7 @@
 {
     "cSpell.words": [
         "Nuxt"
-    ]
+    ],
+    "cSpell.enabled": false,
+    "editor.colorDecorators": true
 }
